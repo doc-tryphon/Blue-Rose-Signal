@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd blue-rose-signal-next && npm install && npm run build",
+  "outputDirectory": "blue-rose-signal-next/.next",
+  "installCommand": "cd blue-rose-signal-next && npm install",
+  "framework": "nextjs"
+}
