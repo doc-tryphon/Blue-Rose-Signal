@@ -1,0 +1,66 @@
+# Blue Rose Signal - Gitignore
+
+# Next.js
+blue-rose-signal-next/.next/
+blue-rose-signal-next/out/
+blue-rose-signal-next/build/
+blue-rose-signal-next/dist/
+
+# Node
+blue-rose-signal-next/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python / Streamlit Legacy
+streamlit-legacy/__pycache__/
+streamlit-legacy/*.pyc
+streamlit-legacy/*.pyo
+streamlit-legacy/*.pyd
+streamlit-legacy/.Python
+streamlit-legacy/venv/
+streamlit-legacy/env/
+streamlit-legacy/ENV/
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code
+.claude/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+blue-rose-signal-next/next-env.d.ts
+
+# Misc
+.cache/
+temp/
+tmp/
