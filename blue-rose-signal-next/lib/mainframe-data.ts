@@ -6,33 +6,62 @@ export interface CaseFile {
   class: string
   location: string
   sector: string
-  summary: string
+  leadObserver?: string
+  unitDeployed?: string
+  relatedEntities?: string
+  summary: string // BLUF
+  locationProfile?: {
+    coordinates: string
+    geology: string
+    assessment: string
+    access: string
+    characteristics: string[]
+  }
   events: CaseEvent[]
   theories: CaseTheory[]
   protocols: CaseProtocol[]
+  afterActionReport?: {
+    consensus: string
+    statement: string
+  }
   lastAudit: string
 }
 
 export interface CaseEvent {
   id: string
   date: string
-  type: string
-  description: string
+  type?: string // Title of the event
+  description: string // Main content or observations
   assessment: string
   personnel?: string
   location?: string
+  timeline?: string
+  manifestation?: string
+  observations?: {
+    title: string
+    content: string
+  }[]
 }
 
 export interface CaseTheory {
   name: string
-  type: 'Physical' | 'Metaphysical' | 'Ontological' | 'Entity'
+  type: 'Physical' | 'Metaphysical' | 'Ontological' | 'Entity' | 'Temporal'
   description: string
+  plausibility?: string
+  explains?: string
+  implication?: string
+  connection?: string
+  question?: string
 }
 
 export interface CaseProtocol {
+  id?: string
   name: string
   mandate: string
-  purpose: string
+  purpose?: string
+  rationale?: string
+  status?: string
+  notes?: string[]
 }
 
 export interface SystemProtocol {
@@ -139,33 +168,158 @@ export const CASE_FILES: CaseFile[] = [
     codename: 'THE CRAWLER',
     anomalyId: 'ANOMALY-RR01',
     status: 'DORMANT',
-    class: 'Entity/Temporal',
-    location: 'Red Rocks - Colorado',
+    class: 'Entity / Temporal',
+    location: 'Red Rocks Group Campground / North of Woodland Park, CO',
     sector: '04',
-    lastAudit: '2023-08-15',
-    summary: 'Fresno Nightcrawler contact events. Site abandoned due to high-strangeness saturation. Do not return.',
+    leadObserver: 'Doc (Tryphon)',
+    unitDeployed: 'Beef, Nick, Doc',
+    relatedEntities: 'Shadow Figures; "Fresno Nightcrawler"; Sentinel Elk; Unknown Teepee Origin',
+    lastAudit: '2024-12-14',
+    summary: 'Three-operator unit deployed to anomalous rock formation for NVG training encountered multiple entity classes and verified temporal distortion. Site exhibited: shadow figure manifestation, accelerated darkness descent (daylight to full dark in 30 minutes), confirmed Fresno Nightcrawler sighting under NODs, and time dilation during exfiltration. Site Assessment: Compromised. Paranatural activity density exceeds safe operational threshold. DO NOT RETURN.',
+    locationProfile: {
+      coordinates: 'North of Woodland Park, Colorado',
+      geology: 'Anomalous rock formation - isolated structure. No congruent geological features in surrounding area.',
+      assessment: '"An ancient Atlantean city street block turned to stone"',
+      access: 'Vehicle to parking area, foot traverse to formation',
+      characteristics: [
+        'Porous rock formations with multiple sight-line obstructions',
+        'Isolated from surrounding geological context',
+        'Unknown ritualistic presence (teepee - appeared/disappeared)'
+      ]
+    },
     events: [
       {
         id: '000',
-        date: '2023-06-01 23:45',
-        type: 'Contact',
-        description: 'Video evidence of bipedal entities moving through park area.',
-        assessment: 'Confirmed visual contact. Non-hostile but ontologically disruptive.'
+        date: 'Approx. 2023',
+        type: 'ARRIVAL ANOMALIES',
+        description: 'Upon arrival at parking area, unit observed a teepee erected near the parking location. Origin unknown. No other vehicles or personnel present.',
+        personnel: 'Doc (Lead), Beef, Nick',
+        assessment: 'Unit disengaged. Proceeded to rock formation.',
+        observations: [
+          {
+            title: 'The Teepee',
+            content: 'Upon arrival at parking area, unit observed a teepee erected near the parking location. Origin unknown. No other vehicles or personnel present.'
+          },
+          {
+            title: 'First Contact (Shadow Figure)',
+            content: 'Beef identified shadow figure approximately 150 yards from unit position. Figure presented uncanny visual signature. Beef initiated charge to announce presence and identify. Result: Upon approach, figure dissolved into void - described as "abyss of woodland shadows" despite full daylight conditions. Entity was not a person but a localized darkness anomaly in otherwise illuminated woods.'
+          }
+        ]
+      },
+      {
+        id: '001',
+        date: '20-30 minutes from arrival',
+        type: 'ACCELERATED DARKNESS',
+        description: 'Daylight to total darkness in 30 minutes. Expected timeline: Several hours (per seasonal norm).',
+        manifestation: 'Daylight to total darkness',
+        assessment: 'Localized temporal acceleration or light-absorption phenomenon. Unit forced to deploy NVGs for navigation far earlier than solar position warranted. Signature: Matches "4-Hour Cycle" temporal anomalies documented in BR-K04, but manifesting as compression rather than dilation.'
+      },
+      {
+        id: '002',
+        date: '~3 hours of navigation',
+        type: 'PERIPHERAL ENTITIES',
+        description: 'Shadow figures observed creeping along corners of sight lines. Entities utilized porous rock formations for concealment/movement.',
+        personnel: 'All three operators (independent confirmation)',
+        assessment: 'Surveillance behavior. Unit was being watched and tracked throughout traverse.'
+      },
+      {
+        id: '003',
+        date: 'During descent',
+        type: 'THE CRAWLER (Primary Entity Contact)',
+        description: 'Doc acquired visual on entity under NODs. Immediate threat assessment triggered. Doc called: "CONTACT FRONT! FUCK IT I\'M GOING WHITE LIGHT". White light activation - entity vanished. Only trees visible under white light.',
+        personnel: 'Doc (flank position, rear security)',
+        manifestation: 'Pair of legs, detached from discernible body. Elongated, dramatic stride pattern. Semi-torso, minimal definition. Appeared to be under white sheet. Bipedal locomotion, smooth traverse.',
+        assessment: 'PID Assessment: Visual signature matches documented "Fresno Nightcrawler" cryptid. Critical Note: Entity visible ONLY under night vision. Disappeared immediately upon white light exposure.'
+      },
+      {
+        id: '004',
+        date: 'Exfiltration',
+        type: 'EXFILTRATION ANOMALIES',
+        description: 'Expected exfil time: 2-5 minutes. Actual exfil time: "Uncanny amount" - time dilation confirmed.',
+        assessment: 'Possible guardian entity or territorial marker. Elk may have been observing unit departure rather than exhibiting natural behavior.',
+        observations: [
+          {
+            title: 'Teepee Absence',
+            content: 'The teepee observed upon arrival was no longer present at exfil. No evidence of removal. Structure simply gone.'
+          },
+          {
+            title: 'Vehicle Signature',
+            content: 'No reflective lights visible on unit vehicle. Expected: headlight/taillight reflectors visible under NODs from distance.'
+          },
+          {
+            title: 'Sentinel Elk',
+            content: 'Massive elk positioned 20 feet from exfil trail. Stationary. All three operators trained rifles on entity while navigating past. Behavior inconsistent with normal elk response to armed humans at close proximity.'
+          }
+        ]
       }
     ],
     theories: [
       {
-        name: 'Theory A',
+        name: 'THEORY A',
+        type: 'Ontological',
+        description: 'THIN PLACE. Red Rocks formation is a permanent threshold location. Geological anomaly (isolated, incongruent with surrounding terrain) may indicate site of dimensional weakness.',
+        plausibility: 'HIGH',
+        explains: 'All entity sightings, teepee appearance/disappearance',
+        implication: 'Site is a door. Something uses it.'
+      },
+      {
+        name: 'THEORY B',
+        type: 'Temporal',
+        description: 'TEMPORAL FLUX ZONE. Location exhibits bidirectional time distortion - compression on approach (accelerated darkness), dilation on exfil (extended travel time).',
+        plausibility: 'HIGH',
+        explains: '30-min darkness descent, extended exfil time',
+        connection: 'Related to BR-K04 "4-Hour Cycle" signature'
+      },
+      {
+        name: 'THEORY C',
+        type: 'Metaphysical',
+        description: 'RITUALISTIC ACTIVATION. Teepee presence suggests prior ritualistic activity at site. Unknown party may have "opened" the location.',
+        plausibility: 'MODERATE',
+        explains: 'Teepee appearance/disappearance, high entity density',
+        question: 'Who erected the teepee? Where did they go?'
+      },
+      {
+        name: 'THEORY D',
         type: 'Entity',
-        description: 'Interdimensional travellers utilizing geometry not visible to human eye.'
+        description: 'FRESNO CRAWLER MIGRATION. Fresno Nightcrawler has multi-state sighting history. Entity may utilize threshold locations as transit points.',
+        plausibility: 'THEORETICAL',
+        explains: 'Why entity was present, why it departed on detection',
+        implication: 'Crawler network exists across threshold sites'
       }
     ],
     protocols: [
       {
-        name: 'Exclusion Zone',
-        mandate: '1km perimeter enforcement.',
-        purpose: 'Prevent civilian contact.'
+        id: 'RR-001',
+        name: 'SITE ABANDONMENT',
+        mandate: 'DO NOT RETURN TO RED ROCKS GROUP CAMPGROUND',
+        rationale: 'Paranatural activity density exceeds operational safety threshold',
+        status: 'PERMANENT',
+        purpose: 'Containment via avoidance'
+      },
+      {
+        id: 'RR-002',
+        name: 'NOD CONTACT PROCEDURE',
+        mandate: 'Entity visible under NODs but not white light indicates spectral-adjacent manifestation',
+        notes: [
+          'DO NOT assume white light "cleared" the threat',
+          'Entity displaced, not destroyed',
+          'Maintain tactical posture through full exfil'
+        ],
+        purpose: 'Tactical safety'
+      },
+      {
+        id: 'RR-003',
+        name: 'WILDLIFE BEHAVIORAL ASSESSMENT',
+        mandate: 'Treat unusual wildlife as potential hostile until clear of threshold',
+        notes: [
+          'Abnormal animal behavior may indicate entity in disguise, territorial guardian, or reality rendering placeholder'
+        ],
+        purpose: 'Threat identification'
       }
-    ]
+    ],
+    afterActionReport: {
+      consensus: 'UNANIMOUS: Area is operationally untenable for training purposes. Paranatural presence confirmed by all three observers. Multiple independent sightings eliminate hallucination theory.',
+      statement: 'Doc: "I kept my rifle trained on the outdoors the whole time we loaded into the vehicle to leave, and it wasn\'t until we were miles away that I felt safe."'
+    }
   }
 ]
