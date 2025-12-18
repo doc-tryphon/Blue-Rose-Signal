@@ -5,6 +5,21 @@ import Link from 'next/link'
 import CRTMonitor from '@/components/CRTMonitor'
 import { SYSTEM_PROTOCOLS, CASE_FILES } from '@/lib/mainframe-data'
 
+// Shared nav button styles
+const navButtonBase = 'w-full md:w-auto px-4 py-3 md:px-3 md:py-1 text-left md:text-center uppercase tracking-wider transition-colors border border-crt-amber/50 md:border-0 bg-crt-amber/5 md:bg-transparent hover:bg-crt-amber/20'
+const navButtonActive = 'bg-crt-amber text-black font-bold border-crt-amber'
+
+// Terminal-style bracket wrapper (mobile only)
+function TerminalLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <span className="text-crt-amber/50 mr-2 md:hidden">[</span>
+      {children}
+      <span className="text-crt-amber/50 ml-2 md:hidden">]</span>
+    </>
+  )
+}
+
 export default function MainframeDashboard() {
   const [activeTab, setActiveTab] = useState<'STATUS' | 'PROTOCOLS' | 'CASES'>('STATUS')
 
@@ -26,34 +41,34 @@ export default function MainframeDashboard() {
         </div>
 
         {/* NAVIGATION TABS */}
-        <div className="flex flex-wrap gap-2 md:gap-4 border-b border-crt-amber/30 pb-2">
+        <div className="flex flex-col md:flex-row md:flex-wrap gap-2 md:gap-4 border-b border-crt-amber/30 pb-4 md:pb-2">
           <button
             onClick={() => setActiveTab('STATUS')}
-            className={`px-3 py-1 uppercase tracking-wider transition-colors ${activeTab === 'STATUS' ? 'bg-crt-amber text-black font-bold' : 'hover:bg-crt-amber/20'}`}
+            className={`${navButtonBase} ${activeTab === 'STATUS' ? navButtonActive : ''}`}
           >
-            System Status
+            <TerminalLabel>System Status</TerminalLabel>
           </button>
           <button
             onClick={() => setActiveTab('PROTOCOLS')}
-            className={`px-3 py-1 uppercase tracking-wider transition-colors ${activeTab === 'PROTOCOLS' ? 'bg-crt-amber text-black font-bold' : 'hover:bg-crt-amber/20'}`}
+            className={`${navButtonBase} ${activeTab === 'PROTOCOLS' ? navButtonActive : ''}`}
           >
-            Active Protocols
+            <TerminalLabel>Active Protocols</TerminalLabel>
           </button>
           <button
             onClick={() => setActiveTab('CASES')}
-            className={`px-3 py-1 uppercase tracking-wider transition-colors ${activeTab === 'CASES' ? 'bg-crt-amber text-black font-bold' : 'hover:bg-crt-amber/20'}`}
+            className={`${navButtonBase} ${activeTab === 'CASES' ? navButtonActive : ''}`}
           >
-            Case Archive
+            <TerminalLabel>Case Archive</TerminalLabel>
           </button>
           <Link
             href="/mainframe/personnel/doc"
-            className="px-3 py-1 uppercase tracking-wider hover:bg-crt-amber/20 transition-colors border-l border-crt-amber/30 pl-4 ml-2"
+            className={`${navButtonBase} md:border-l md:border-crt-amber/30 md:pl-4 md:ml-2`}
           >
-            Personnel: DOC
+            <TerminalLabel>Personnel: DOC</TerminalLabel>
           </Link>
           <Link
             href="/spectrograph"
-            className="px-3 py-1 uppercase tracking-wider hover:bg-red-900/50 text-red-400 ml-auto border border-red-900/50 hover:border-red-500 animate-pulse"
+            className="w-full md:w-auto px-4 py-3 md:px-3 md:py-1 text-center uppercase tracking-wider transition-colors text-red-400 md:ml-auto border border-red-500/50 hover:border-red-500 hover:bg-red-900/30 bg-red-900/20 md:bg-transparent animate-pulse"
           >
             ▶ Launch Spectrograph
           </Link>
