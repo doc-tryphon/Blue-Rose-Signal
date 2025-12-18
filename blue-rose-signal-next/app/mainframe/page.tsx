@@ -46,6 +46,12 @@ export default function MainframeDashboard() {
             Case Archive
           </button>
           <Link
+            href="/mainframe/personnel/doc"
+            className="px-3 py-1 uppercase tracking-wider hover:bg-crt-amber/20 transition-colors border-l border-crt-amber/30 pl-4 ml-2"
+          >
+            Personnel: DOC
+          </Link>
+          <Link
             href="/spectrograph"
             className="px-3 py-1 uppercase tracking-wider hover:bg-red-900/50 text-red-400 ml-auto border border-red-900/50 hover:border-red-500 animate-pulse"
           >
