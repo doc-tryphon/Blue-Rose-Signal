@@ -1,419 +1,229 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState } from 'react'
+import Link from 'next/link'
 import CRTMonitor from '@/components/CRTMonitor'
-import AudioVisualizer from '@/components/AudioVisualizer'
-import VUMeter from '@/components/VUMeter'
-import { LiveSynthesizer, LiveSynthParams } from '@/lib/liveSynth'
-import { PRESETS, DEFAULT_PRESET } from '@/lib/presets'
+import { SYSTEM_PROTOCOLS, CASE_FILES } from '@/lib/mainframe-data'
 
-export default function Home() {
-  const [params, setParams] = useState<LiveSynthParams>(DEFAULT_PRESET)
-  const [showAdvanced, setShowAdvanced] = useState(false)
-  const [selectedPreset, setSelectedPreset] = useState(0)
-
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [envelope, setEnvelope] = useState(0.5) // Voltage starvation state
-  const synthRef = useRef<LiveSynthesizer | null>(null)
-  const analyserRef = useRef<AnalyserNode | null>(null)
-  const audioContextRef = useRef<AudioContext | null>(null)
-
-  // Initialize synthesizer on mount
-  useEffect(() => {
-    synthRef.current = new LiveSynthesizer()
-
-    // Set up voltage starvation callback
-    synthRef.current.setEnvelopeCallback((env, mask) => {
-      setEnvelope(env)
-    })
-
-    return () => {
-      if (synthRef.current) {
-        synthRef.current.stop()
-      }
-    }
-  }, [])
-
-  // Update parameters in real-time when sliders change
-  useEffect(() => {
-    if (synthRef.current && isPlaying) {
-      synthRef.current.updateParams(params)
-    }
-  }, [params, isPlaying])
-
-  const handleStartStop = async () => {
-    if (!synthRef.current) return
-
-    if (isPlaying) {
-      // Stop synthesis
-      synthRef.current.stop()
-      setIsPlaying(false)
-    } else {
-      // Start synthesis - iOS Safari requires AudioContext to be created synchronously
-      if (!audioContextRef.current) {
-        // CRITICAL: Create AudioContext synchronously within user gesture
-        audioContextRef.current = synthRef.current.initializeAudioContext()
-        analyserRef.current = synthRef.current.getAnalyser()
-
-        // Then load the worklet asynchronously
-        await synthRef.current.loadWorklet()
-      }
-
-      await synthRef.current.start(params)
-      setIsPlaying(true)
-    }
-  }
-
-  const handlePresetChange = (index: number) => {
-    setSelectedPreset(index)
-    setParams(PRESETS[index].params)
-  }
-
-  const handleReset = () => {
-    setParams(DEFAULT_PRESET)
-    setSelectedPreset(0)
-  }
+export default function MainframeDashboard() {
+  const [activeTab, setActiveTab] = useState<'STATUS' | 'PROTOCOLS' | 'CASES'>('STATUS')
 
   return (
-    <CRTMonitor envelope={envelope} isPlaying={isPlaying}>
-      <div className="text-center space-y-4 md:space-y-3">
-        {/* Main Title */}
-        <div className="bg-gradient-to-br from-red-900/10 to-orange-900/5 border-l-4 border-red-500 p-3 rounded-lg shadow-[0_0_20px_rgba(255,0,0,0.2)]">
-          <h2 className="text-2xl md:text-3xl mb-1 drop-shadow-[0_0_20px_rgba(255,204,0,0.8)]">
-            ⚡ STOCHASTIC INTERFERENCE SPECTROGRAPH
-          </h2>
-          <p className="text-sm md:text-base text-red-400 animate-pulse">
-            &gt; SYSTEM STATUS: {isPlaying ? 'ACTIVE' : 'STANDBY'} // REAL-TIME SYNTHESIS
-          </p>
-        </div>
+    <CRTMonitor>
+      <div className="font-vt323 text-crt-amber space-y-6 max-w-4xl mx-auto">
 
-        {/* Preset Selector & Controls */}
-        <div className="bg-black/30 border border-amber-500/30 rounded-lg p-3 space-y-3">
-          <div className="flex gap-2 items-center">
-            <select
-              value={selectedPreset}
-              onChange={(e) => handlePresetChange(parseInt(e.target.value))}
-              className="flex-1 bg-black border border-amber-500/50 text-amber-500 px-3 py-2 rounded text-sm uppercase tracking-wider cursor-pointer hover:border-amber-500"
-            >
-              {PRESETS.map((preset, idx) => (
-                <option key={idx} value={idx}>
-                  {preset.name}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={handleReset}
-              className="px-4 py-2 border border-amber-500/50 text-amber-500 text-sm uppercase tracking-wider rounded hover:bg-amber-500/10"
-            >
-              Reset
-            </button>
+        {/* HEADER */}
+        <div className="border-b-2 border-crt-amber/50 pb-4 mb-6">
+          <div className="text-xs md:text-sm text-crt-amber/70 mb-1">BLUE ROSE DIVISION // MAINFRAME</div>
+          <div className="w-full bg-crt-amber/10 p-2 text-xs md:text-sm font-bold whitespace-pre-wrap leading-tight hidden md:block">
+            {`████████████████████████████████████████████████████████████████
+██  BLUE ROSE DIVISION  ██  OAK RIDGE FIELD OFFICE  ██  SEC-7  ██
+████████████████████████████████████████████████████████████████`}
           </div>
-          <div className="text-xs text-gray-500 text-left">
-            {PRESETS[selectedPreset].description}
+          <div className="md:hidden text-xl font-bold border-2 border-crt-amber p-2 text-center">
+            BLUE ROSE DIVISION
           </div>
         </div>
 
-        {/* BASIC CONTROLS */}
-        <div className="bg-black/30 border border-amber-500/30 rounded-lg p-3 space-y-2">
-          <div className="text-sm uppercase tracking-wider text-amber-500/80 text-left border-b border-amber-500/20 pb-2">
-            Basic Controls
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-2">
-            <div className="bg-black/50 p-3 md:p-2 rounded border border-amber-500/20">
-              <label className="flex flex-col space-y-2 md:space-y-1">
-                <span className="text-xs uppercase tracking-wider text-blue-400">
-                  Threshold: <span className="text-amber-500">{params.threshold.toFixed(2)}</span>
-                </span>
-                <input
-                  type="range"
-                  min="0.1"
-                  max="0.9"
-                  step="0.01"
-                  value={params.threshold}
-                  onChange={(e) => setParams({...params, threshold: parseFloat(e.target.value)})}
-                  className="accent-blue-500"
-                />
-              </label>
-            </div>
-
-            <div className="bg-black/50 p-3 md:p-2 rounded border border-amber-500/20">
-              <label className="flex flex-col space-y-2 md:space-y-1">
-                <span className="text-xs uppercase tracking-wider text-blue-400">
-                  Smoothness: <span className="text-amber-500">{params.smoothness}</span>
-                </span>
-                <input
-                  type="range"
-                  min="50"
-                  max="2000"
-                  step="10"
-                  value={params.smoothness}
-                  onChange={(e) => setParams({...params, smoothness: parseFloat(e.target.value)})}
-                  className="accent-blue-500"
-                />
-              </label>
-            </div>
-
-            <div className="bg-black/50 p-3 md:p-2 rounded border border-red-500/20">
-              <label className="flex flex-col space-y-2 md:space-y-1">
-                <span className="text-xs uppercase tracking-wider text-red-400">
-                  Spark Gain: <span className="text-amber-500">{params.sparkGain.toFixed(0)}</span>
-                </span>
-                <input
-                  type="range"
-                  min="0"
-                  max="200"
-                  step="5"
-                  value={params.sparkGain}
-                  onChange={(e) => setParams({...params, sparkGain: parseFloat(e.target.value)})}
-                  className="accent-red-500"
-                />
-              </label>
-            </div>
-
-            <div className="bg-black/50 p-3 md:p-2 rounded border border-red-500/20">
-              <label className="flex flex-col space-y-2 md:space-y-1">
-                <span className="text-xs uppercase tracking-wider text-red-400">
-                  Noise Level: <span className="text-amber-500">{params.noiseGain.toFixed(2)}</span>
-                </span>
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  value={params.noiseGain}
-                  onChange={(e) => setParams({...params, noiseGain: parseFloat(e.target.value)})}
-                  className="accent-red-500"
-                />
-              </label>
-            </div>
-
-            <div className="bg-black/50 p-3 md:p-2 rounded border border-green-500/20">
-              <label className="flex flex-col space-y-2 md:space-y-1">
-                <span className="text-xs uppercase tracking-wider text-green-400">
-                  Hum Volume: <span className="text-amber-500">{params.humGain.toFixed(2)}</span>
-                </span>
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  value={params.humGain}
-                  onChange={(e) => setParams({...params, humGain: parseFloat(e.target.value)})}
-                  className="accent-green-500"
-                />
-              </label>
-            </div>
-
-            <div className="bg-black/50 p-3 md:p-2 rounded border border-yellow-500/20">
-              <label className="flex flex-col space-y-2 md:space-y-1">
-                <span className="text-xs uppercase tracking-wider text-yellow-400">
-                  Master Vol: <span className="text-amber-500">{params.masterVolume.toFixed(2)}</span>
-                </span>
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  value={params.masterVolume}
-                  onChange={(e) => setParams({...params, masterVolume: parseFloat(e.target.value)})}
-                  className="accent-yellow-500"
-                />
-              </label>
-            </div>
-          </div>
-        </div>
-
-        {/* ADVANCED CONTROLS */}
-        <div className="bg-black/30 border border-amber-500/30 rounded-lg overflow-hidden">
+        {/* NAVIGATION TABS */}
+        <div className="flex flex-wrap gap-2 md:gap-4 border-b border-crt-amber/30 pb-2">
           <button
-            onClick={() => setShowAdvanced(!showAdvanced)}
-            className="w-full text-left px-3 py-2 text-sm uppercase tracking-wider text-amber-500/80 hover:bg-amber-500/5 transition-colors flex items-center justify-between"
+            onClick={() => setActiveTab('STATUS')}
+            className={`px-3 py-1 uppercase tracking-wider transition-colors ${activeTab === 'STATUS' ? 'bg-crt-amber text-black font-bold' : 'hover:bg-crt-amber/20'}`}
           >
-            <span>{showAdvanced ? '▼' : '▶'} Advanced Controls</span>
+            System Status
           </button>
+          <button
+            onClick={() => setActiveTab('PROTOCOLS')}
+            className={`px-3 py-1 uppercase tracking-wider transition-colors ${activeTab === 'PROTOCOLS' ? 'bg-crt-amber text-black font-bold' : 'hover:bg-crt-amber/20'}`}
+          >
+            Active Protocols
+          </button>
+          <button
+            onClick={() => setActiveTab('CASES')}
+            className={`px-3 py-1 uppercase tracking-wider transition-colors ${activeTab === 'CASES' ? 'bg-crt-amber text-black font-bold' : 'hover:bg-crt-amber/20'}`}
+          >
+            Case Archive
+          </button>
+          <Link
+            href="/spectrograph"
+            className="px-3 py-1 uppercase tracking-wider hover:bg-red-900/50 text-red-400 ml-auto border border-red-900/50 hover:border-red-500 animate-pulse"
+          >
+            ▶ Launch Spectrograph
+          </Link>
+        </div>
 
-          {showAdvanced && (
-            <div className="p-3 space-y-3 border-t border-amber-500/20">
-              <div>
-                <div className="text-xs text-gray-500 mb-2">Individual Harmonic Control</div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-2">
-                  <div className="bg-black/50 p-3 md:p-2 rounded border border-green-500/20">
-                    <label className="flex flex-col space-y-2 md:space-y-1">
-                      <span className="text-xs uppercase tracking-wider text-green-400">
-                        120Hz: <span className="text-amber-500">{params.hum120Gain.toFixed(2)}</span>
-                      </span>
-                      <input
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.01"
-                        value={params.hum120Gain}
-                        onChange={(e) => setParams({...params, hum120Gain: parseFloat(e.target.value)})}
-                        className="accent-green-500"
-                      />
-                    </label>
+        {/* CONTENT AREA */}
+        <div className="min-h-[400px]">
+
+          {/* SYSTEM STATUS VIEW */}
+          {activeTab === 'STATUS' && (
+            <div className="space-y-6 animate-in fade-in duration-300">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="border border-crt-amber/30 p-4 bg-black/40">
+                  <h3 className="text-lg border-b border-crt-amber/30 mb-3 pb-1">DIAGNOSTICS</h3>
+                  <div className="space-y-2 text-sm md:text-base">
+                    <div className="flex justify-between">
+                      <span>SYSTEM STATUS:</span>
+                      <span className="text-green-400 animate-pulse">LIVE</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>ENTROPY INDEX:</span>
+                      <span className="text-red-400">██████████░░ 78% (ELEVATED)</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>THRESHOLD STABILITY:</span>
+                      <span className="text-yellow-400">██████░░░░░░ 52% (UNSTABLE)</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>DEFCON STATUS:</span>
+                      <span>3 - ROUND FORCE</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>LAST SYNC:</span>
+                      <span>2024-12-14</span>
+                    </div>
                   </div>
+                </div>
 
-                  <div className="bg-black/50 p-3 md:p-2 rounded border border-green-500/20">
-                    <label className="flex flex-col space-y-2 md:space-y-1">
-                      <span className="text-xs uppercase tracking-wider text-green-400">
-                        180Hz: <span className="text-amber-500">{params.hum180Gain.toFixed(2)}</span>
-                      </span>
-                      <input
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.01"
-                        value={params.hum180Gain}
-                        onChange={(e) => setParams({...params, hum180Gain: parseFloat(e.target.value)})}
-                        className="accent-green-500"
-                      />
-                    </label>
-                  </div>
-
-                  <div className="bg-black/50 p-3 md:p-2 rounded border border-green-500/20">
-                    <label className="flex flex-col space-y-2 md:space-y-1">
-                      <span className="text-xs uppercase tracking-wider text-green-400">
-                        300Hz: <span className="text-amber-500">{params.hum300Gain.toFixed(2)}</span>
-                      </span>
-                      <input
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.01"
-                        value={params.hum300Gain}
-                        onChange={(e) => setParams({...params, hum300Gain: parseFloat(e.target.value)})}
-                        className="accent-green-500"
-                      />
-                    </label>
+                <div className="border border-crt-amber/30 p-4 bg-black/40">
+                  <h3 className="text-lg border-b border-crt-amber/30 mb-3 pb-1">CASE SUMMARY</h3>
+                  <div className="space-y-2 text-sm md:text-base">
+                    <div className="flex justify-between">
+                      <span>ACTIVE CASES:</span>
+                      <span className="text-red-400 font-bold">1</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>DORMANT CASES:</span>
+                      <span>1</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>TOTAL CASES:</span>
+                      <span>2</span>
+                    </div>
+                    <div className="mt-4 pt-2 border-t border-crt-amber/10 text-xs text-crt-amber/60">
+                      WARNING: Unauthorized access to classified case files is a Class B felony under the Federal Bureau of Control charter.
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="border-t border-amber-500/10 pt-3">
-                <div className="text-xs text-gray-500 mb-2 flex items-center gap-2">
-                  <span>Ring Modulation</span>
-                  <span className="text-purple-400">&quot;Ghost in the Radio&quot;</span>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-2">
-                  <div className="bg-black/50 p-3 md:p-2 rounded border border-purple-500/20">
-                    <label className="flex items-center justify-between">
-                      <span className="text-xs uppercase tracking-wider text-purple-400">
-                        Carrier Scan
-                      </span>
-                      <input
-                        type="checkbox"
-                        checked={params.ringModEnabled}
-                        onChange={(e) => setParams({...params, ringModEnabled: e.target.checked})}
-                        className="accent-purple-500 w-5 h-5"
-                      />
-                    </label>
+              <div className="border-l-4 border-crt-amber p-4 bg-crt-amber/5">
+                <h3 className="font-bold mb-2">THRESHOLD WORK (n.)</h3>
+                <p className="text-sm md:text-base leading-relaxed opacity-90">
+                  The documentation, analysis, and containment of ontological anomalies, temporal distortions, and high-strangeness events occurring within or adjacent to consensus reality.
+                  <br/><br/>
+                  The Blue Rose Division operates under the assumption that the map is not the territory—and sometimes, the territory rewrites the map. We do not seek to explain. We seek to observe, document, and maintain coherence.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* PROTOCOLS VIEW */}
+          {activeTab === 'PROTOCOLS' && (
+            <div className="space-y-6 animate-in fade-in duration-300">
+              {SYSTEM_PROTOCOLS.map((protocol) => (
+                <div key={protocol.id} className="border border-crt-amber/30 p-4 bg-black/20 hover:bg-crt-amber/5 transition-colors">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="bg-crt-amber text-black text-xs font-bold px-1">PROTOCOL {protocol.id}</span>
+                    <h3 className="font-bold text-lg">{protocol.name}</h3>
+                    <span className="ml-auto text-xs text-green-400 border border-green-900 px-2 py-0.5 rounded-full">{protocol.status}</span>
                   </div>
 
-                  <div className="bg-black/50 p-3 md:p-2 rounded border border-purple-500/20">
-                    <label className="flex flex-col space-y-2 md:space-y-1">
-                      <span className="text-xs uppercase tracking-wider text-purple-400">
-                        Carrier: <span className="text-amber-500">{params.carrierFreq.toFixed(0)}Hz</span>
-                      </span>
-                      <input
-                        type="range"
-                        min="100"
-                        max="3000"
-                        step="50"
-                        value={params.carrierFreq}
-                        onChange={(e) => setParams({...params, carrierFreq: parseFloat(e.target.value)})}
-                        className="accent-purple-500"
-                        disabled={!params.ringModEnabled}
-                      />
-                    </label>
+                  <div className="pl-4 border-l-2 border-crt-amber/20 space-y-2">
+                    <div className="text-sm">
+                      <span className="text-crt-amber/60 uppercase text-xs block">Mandate</span>
+                      {protocol.mandate}
+                    </div>
+
+                    {protocol.purpose && (
+                      <div className="text-sm">
+                        <span className="text-crt-amber/60 uppercase text-xs block">Purpose</span>
+                        {protocol.purpose}
+                      </div>
+                    )}
+
+                    {protocol.subProtocols && (
+                      <div className="mt-3 space-y-3 pt-2">
+                        {protocol.subProtocols.map(sub => (
+                          <div key={sub.id} className="bg-black/30 p-2 rounded">
+                            <span className="text-crt-amber/80 font-bold block text-xs mb-1">{sub.id}: {sub.name}</span>
+                            <span className="text-sm opacity-80">{sub.description}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
+              ))}
+            </div>
+          )}
+
+          {/* CASE FILES VIEW */}
+          {activeTab === 'CASES' && (
+            <div className="space-y-4 animate-in fade-in duration-300">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-bold">CLASSIFIED CASE FILES</h3>
+                <span className="text-xs text-crt-amber/60">ACCESS LEVEL: OPERATOR</span>
               </div>
 
-              <div className="border-t border-amber-500/10 pt-3">
-                <div className="text-xs text-gray-500 mb-2 flex items-center gap-2">
-                  <span>Tape Effects</span>
-                  <span className="text-cyan-400">&quot;Vintage Degradation&quot;</span>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-2">
-                  <div className="bg-black/50 p-3 md:p-2 rounded border border-cyan-500/20">
-                    <label className="flex flex-col space-y-2 md:space-y-1">
-                      <span className="text-xs uppercase tracking-wider text-cyan-400">
-                        Wow/Flutter: <span className="text-amber-500">{params.wowFlutterDepth.toFixed(2)}</span>
-                      </span>
-                      <input
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.01"
-                        value={params.wowFlutterDepth}
-                        onChange={(e) => setParams({...params, wowFlutterDepth: parseFloat(e.target.value)})}
-                        className="accent-cyan-500"
-                      />
-                    </label>
-                  </div>
+              <div className="grid gap-4">
+                {CASE_FILES.map((file) => (
+                  <Link href={`/case/${file.id}`} key={file.id} className="block group">
+                    <div className={`border p-4 transition-all duration-300 relative overflow-hidden ${
+                      file.status === 'ACTIVE'
+                        ? 'border-red-500/50 hover:border-red-500 hover:shadow-[0_0_15px_rgba(255,0,0,0.2)]'
+                        : 'border-crt-amber/30 hover:border-crt-amber hover:shadow-[0_0_15px_rgba(255,204,0,0.2)]'
+                    }`}>
+                      {/* Scanline hover effect */}
+                      <div className="absolute inset-0 bg-crt-amber/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500 pointer-events-none"/>
 
-                  <div className="bg-black/50 p-3 md:p-2 rounded border border-cyan-500/20">
-                    <label className="flex flex-col space-y-2 md:space-y-1">
-                      <span className="text-xs uppercase tracking-wider text-cyan-400">
-                        Saturation: <span className="text-amber-500">{params.saturation.toFixed(2)}</span>
-                      </span>
-                      <input
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.01"
-                        value={params.saturation}
-                        onChange={(e) => setParams({...params, saturation: parseFloat(e.target.value)})}
-                        className="accent-cyan-500"
-                      />
-                    </label>
-                  </div>
+                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 relative z-10">
+                        <div className={`w-3 h-3 rounded-full animate-pulse ${
+                          file.status === 'ACTIVE' ? 'bg-red-500 shadow-[0_0_10px_red]' : 'bg-green-500 shadow-[0_0_10px_green]'
+                        }`}/>
+
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-bold text-lg">{file.id}</span>
+                            <span className="text-crt-amber/50">//</span>
+                            <span className="font-bold">{file.codename}</span>
+                          </div>
+                          <div className="text-sm opacity-70 mt-1">{file.class}</div>
+                        </div>
+
+                        <div className="text-right text-sm opacity-60">
+                          <div>{file.location}</div>
+                          <div className="text-xs uppercase tracking-wider mt-1">{file.status}</div>
+                        </div>
+
+                        <div className="hidden md:block text-2xl opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+                          &gt;
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="mt-8 border-t border-crt-amber/20 pt-4 text-center opacity-50">
+                <div className="text-sm mb-2">📋 NEW CASE TEMPLATE</div>
+                <div className="text-xs border border-dashed border-crt-amber/30 p-2 inline-block">
+                  COPY TEMPLATE FOR NEW CASES
                 </div>
               </div>
             </div>
           )}
+
         </div>
 
-        {/* Start/Stop Button */}
-        <button
-          onClick={handleStartStop}
-          className={`px-6 py-3 border-2 transition-all text-lg rounded-lg uppercase tracking-wider ${
-            isPlaying
-              ? 'border-red-500 bg-transparent text-red-500 hover:bg-red-500 hover:text-black shadow-[0_0_15px_rgba(255,0,0,0.3)] hover:shadow-[0_0_30px_rgba(255,0,0,0.8)]'
-              : 'border-amber-500 bg-transparent text-amber-500 hover:bg-amber-500 hover:text-black shadow-[0_0_15px_rgba(255,204,0,0.3)] hover:shadow-[0_0_30px_rgba(255,204,0,0.8)]'
-          }`}
-        >
-          {isPlaying ? '⏹ STOP SIGNAL' : '▶ START SIGNAL'}
-        </button>
+        {/* FOOTER */}
+        <div className="border-t border-crt-amber/30 pt-4 mt-8 text-center text-xs opacity-60">
+          FEDERAL BUREAU OF CONTROL // BLUE ROSE DIVISION
+          <br/>
+          <span className="italic">"The owls are not what they seem."</span>
+        </div>
 
-        {/* VU Meters & Visualizers */}
-        {isPlaying && (
-          <div className="mt-4 space-y-3">
-            {/* VU Meters */}
-            <div className="grid grid-cols-1 gap-2 bg-black/30 border border-amber-500/30 rounded-lg p-3">
-              <VUMeter
-                analyserNode={analyserRef.current}
-                isPlaying={isPlaying}
-                label="Master Output"
-                color="#ffcc00"
-              />
-            </div>
-
-            {/* Audio Visualizers */}
-            <AudioVisualizer
-              audioContext={audioContextRef.current}
-              analyserNode={analyserRef.current}
-              isPlaying={isPlaying}
-            />
-          </div>
-        )}
-
-        {/* Footer */}
-        <footer className="text-gray-600 text-xs border-t border-gray-800 pt-3 mt-4">
-          FEDERAL BUREAU OF CONTROL PROPRIETARY TECH // REAL-TIME SYNTHESIS ENGINE<br/>
-          <span className="text-gray-500">&quot;The owls are not what they seem.&quot;</span>
-        </footer>
       </div>
     </CRTMonitor>
   )
