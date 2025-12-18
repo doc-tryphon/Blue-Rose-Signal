@@ -52,6 +52,8 @@ export interface CaseTheory {
   implication?: string
   connection?: string
   question?: string
+  doesNotExplain?: string
+  testable?: string
 }
 
 export interface CaseProtocol {
@@ -131,35 +133,114 @@ export const SYSTEM_PROTOCOLS: SystemProtocol[] = [
 export const CASE_FILES: CaseFile[] = [
   {
     id: 'BR-K04',
-    codename: 'THE SINK',
+    codename: 'THE KITCHEN SINK',
     anomalyId: 'ANOMALY-K04',
     status: 'ACTIVE',
-    class: 'Temporal/Entropic',
-    location: 'Sector 01 - Oak Ridge Proximity',
+    class: 'Temporal / Entropic',
+    location: 'Sector 01 (The Residence) / Oak Ridge Proximity',
     sector: '01',
-    lastAudit: '2024-12-14',
-    summary: 'Recurring localized time distortions with 4-hour cycle signature. Area exhibits elevated entropy readings.',
+    leadObserver: 'Doc (Tryphon)',
+    relatedEntities: 'The Council; Frontier Supercomputer; "Glimmer Man"',
+    lastAudit: '2025-12-18',
+    summary: 'The primary communal area ("The Kitchen") is exhibiting verified, recurring localized time distortions. Manifestations range from minor clock drift (seconds/minutes) to significant temporal shearing (4-hour gaps). Current Hypothesis: The location acts as a "Threshold" or high-latency zone due to proximity to high-energy infrastructure (Frontier Supercomputer) and the high-density information processing of the resident Operator.',
     events: [
       {
         id: '000',
-        date: '2024-11-10 03:00',
-        type: 'Origin',
-        description: 'First detection of temporal shear. Digital clocks desynchronized by 4 minutes within 50m radius.',
-        assessment: 'Initial classification as minor temporal anomaly.'
+        date: '[T-Minus 3 Years]',
+        type: 'THE ORIGIN (The Mountain Precursor)',
+        description: 'Unit experienced a collective 4-hour time warp. Visuals: Presence of active-camouflage entity ("Predator" / "Glimmer Man") observing from tree line. Relevance: Established the "4-Hour Cycle" signature and confirmed the unit\'s sensitivity to high-strangeness events.',
+        personnel: 'The Council + 1 Control Subject (Unaffiliated)',
+        location: '[REDACTED] Mountains',
+        assessment: 'Established the "4-Hour Cycle" signature and confirmed the unit\'s sensitivity to high-strangeness events.'
+      },
+      {
+        id: '001',
+        date: '[2 Weeks Ago]',
+        type: 'THE "BROWNOUT" (Total Desync)',
+        description: 'Total synchronization failure of all electronic timekeeping devices.',
+        manifestation: 'Total synchronization failure',
+        assessment: 'Confirmed the house is a "High Interference Zone."',
+        observations: [
+          {
+            title: 'Grid-Tied Devices',
+            content: 'Reset or drifting. Suggests 60Hz grid fluctuation.'
+          },
+          {
+            title: 'Battery Devices',
+            content: 'Internal oscillator drift. Suggests localized entropy affecting quartz vibration.'
+          },
+          {
+            title: 'Networked Devices',
+            content: 'NTP handshake failure or latency.'
+          }
+        ]
+      },
+      {
+        id: '002',
+        date: '[Last Night]',
+        type: 'THE LOOP (Current)',
+        description: 'Council convened in Kitchen. Unit entered high-intensity cognitive state ("The Rabbit Hole"). Result: Oven clock registered significant time loss/drift unaligned with reality.',
+        manifestation: 'Council convened in Kitchen',
+        timeline: '~4 Hours (Subjective)',
+        assessment: 'Recurrence of the "4-Hour" signature from Event 000. Reality rendering lag caused by high mental processing load within the Threshold.'
+      },
+      {
+        id: '003',
+        date: '12/16/2025 (Morning)',
+        type: 'THE NOSEBLEED',
+        description: 'Sequence:\n1. Beef woke and observed oven clock 1 hour off from actual time\n2. Proceeded outside to walk dog\n3. Experienced spontaneous nosebleed upon exiting residence\n\nProtocol Trigger: Per Protocol 003-C, bloody nose constitutes physical symptom requiring immediate disengage.',
+        personnel: 'Beef',
+        manifestation: 'Oven clock registered 1-hour drift',
+        assessment: 'Third confirmed temporal anomaly at Sector 01. First documented instance of physical manifestation (nosebleed) correlating with threshold exposure at this site. Escalation from equipment-only effects to biological effects is concerning. Note: Observer was not engaged in threshold work at time of incident - suggests passive exposure risk for all residents.'
       }
     ],
     theories: [
       {
-        name: 'Theory A',
+        name: 'THEORY A',
         type: 'Physical',
-        description: 'Localized gravitational wave interference pattern causing temporal dilation.'
+        description: 'THE "GRID DRAG". Massive power load from the nearby Supercomputer (Frontier) is causing micro-fluctuations in the local power grid frequency (<60Hz). Effect: "Dumb" clocks use the grid cycle to count seconds. If the grid drags, time "slows" for the machine.',
+        plausibility: 'HIGH',
+        testable: 'YES (Oscilloscope on grid)',
+        explains: 'Event 001 (Grid-tied devices)',
+        doesNotExplain: 'Event 000 (Mountain), Glimmer Man'
+      },
+      {
+        name: 'THEORY B',
+        type: 'Metaphysical',
+        description: 'INFORMATION GRAVITY. The Lead Observer (Doc) generates 1,600 LOC/hr of structured logic in the adjacent sector. Effect: High information density creates a localized "gravity well." The processing power required to render the Council\'s conversation + The Operator\'s code causes a "Frame Rate Drop" in local reality. The Kitchen is lagging.',
+        plausibility: 'THEORETICAL',
+        testable: 'UNKNOWN',
+        explains: 'Event 002 (Correlation with coding sessions)',
+        implication: 'Consciousness affects local spacetime'
+      },
+      {
+        name: 'THEORY C',
+        type: 'Ontological',
+        description: 'THE THIN PLACE. The backyard is "scaffolded infrastructure" for the Unknown. The veil is thin. Effect: We are seeing "bleed-through" from a non-linear timeline. The "Predator" entity and the Time Sink are symptoms of the same breach.',
+        plausibility: 'UNVERIFIABLE',
+        testable: 'NO',
+        explains: 'ALL EVENTS (Including Glimmer Man)',
+        implication: 'Location is a Threshold. Permanent.'
       }
     ],
     protocols: [
       {
-        name: 'Protocol Sync',
-        mandate: 'All personnel must perform analog watch checks every 30 minutes.',
-        purpose: 'Detect drift onset.'
+        id: '1',
+        name: 'THE ANALOG ANCHOR',
+        mandate: 'A mechanical, spring-wound watch (non-battery, non-grid) must be present during Council sessions.',
+        purpose: 'To serve as the "Master Clock" and control variable against digital drift.'
+      },
+      {
+        id: '2',
+        name: 'THE 60Hz WATCH',
+        mandate: 'Monitor appliance behavior. If the oven light flickers or the hum changes pitch, disengage sensitive work immediately.',
+        purpose: 'Detection of grid fluctuation'
+      },
+      {
+        id: '3',
+        name: 'OPERATOR MAINTENANCE',
+        mandate: 'All personnel must maintain work/rest discipline per Protocol 003.',
+        purpose: 'Prevent burnout and maintain operational coherence.'
       }
     ]
   },
