@@ -60,7 +60,7 @@ export default function BootMenu() {
       {/* Scanlines & Vignette */}
       <div className="absolute inset-0 pointer-events-none opacity-20 scanlines z-10"></div>
       <div className="absolute inset-0 pointer-events-none z-20"
-           style={{ background: 'radial-gradient(circle, transparent 60%, rgba(0,0,0,0.8) 100%)' }}
+        style={{ background: 'radial-gradient(circle, transparent 60%, rgba(0,0,0,0.8) 100%)' }}
       />
 
       <div className="max-w-3xl w-full mx-auto relative z-30 space-y-4 text-lg md:text-2xl leading-relaxed">
@@ -88,11 +88,16 @@ export default function BootMenu() {
               [2] SIGNAL SPECTROGRAPH (PUBLIC UTILITY)
             </Link>
 
-            {/* Input Line */}
+            <Link
+              href="/aeon"
+              className="block hover:bg-crt-amber hover:text-black transition-colors p-2 -mx-2"
+            >
+              [3] PROJECT AEON (NEURAL INTERFACE)
+            </Link>
             <div className="mt-8 flex items-center gap-2">
               <span>&gt; INPUT SELECTION:</span>
               <span className="inline-block min-w-[20px]">{input}</span>
-              <span className="animate-pulse block w-3 h-5 bg-crt-amber"/>
+              <span className="animate-pulse block w-3 h-5 bg-crt-amber" />
             </div>
 
           </div>

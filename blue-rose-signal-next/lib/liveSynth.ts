@@ -185,8 +185,8 @@ export class LiveSynthesizer {
 
     // 2. Hard Clipper: Turns soft Gaussian noise into electrical cracks
     this.arcShaper = this.audioContext.createWaveShaper()
-    // @ts-ignore - Float32Array typing issue with Web Audio API
-    this.arcShaper.curve = this.makeHardClipCurve()
+
+    this.arcShaper.curve = this.makeHardClipCurve() as any
     this.arcShaper.oversample = '4x'
 
     // 3. Arc Gain: Controls the mix (linked to sparkGain parameter)
@@ -221,8 +221,8 @@ export class LiveSynthesizer {
 
     // Create saturation waveshaper (sigmoid curve for soft clipping)
     this.tapeSaturation = this.audioContext.createWaveShaper()
-    // @ts-ignore - Float32Array typing issue with Web Audio API
-    this.tapeSaturation.curve = this.makeSaturationCurve(params.saturation)
+
+    this.tapeSaturation.curve = this.makeSaturationCurve(params.saturation) as any
     this.tapeSaturation.oversample = '4x' // High quality
 
     // Disconnect master from previous connection
@@ -377,8 +377,8 @@ export class LiveSynthesizer {
 
     if (this.tapeSaturation) {
       // Update saturation curve
-      // @ts-ignore - Float32Array typing issue with Web Audio API
-      this.tapeSaturation.curve = this.makeSaturationCurve(params.saturation)
+
+      this.tapeSaturation.curve = this.makeSaturationCurve(params.saturation) as any
     }
 
     // Update ring modulation
@@ -453,7 +453,7 @@ export class LiveSynthesizer {
       const x = (i * 2) / samples - 1 // Range: -1 to 1
       // Sigmoid curve: tanh for soft clipping
       curve[i] = (Math.exp(drive * x * deg) - Math.exp(-drive * x * deg)) /
-                  (Math.exp(drive * x * deg) + Math.exp(-drive * x * deg))
+        (Math.exp(drive * x * deg) + Math.exp(-drive * x * deg))
     }
 
     return curve
