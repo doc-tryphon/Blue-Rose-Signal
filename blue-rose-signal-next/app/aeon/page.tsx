@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import CRTMonitor from '@/components/CRTMonitor'
 import ChatInterface from '@/components/aeon/ChatInterface'
 import ProtocolState from '@/components/aeon/ProtocolState'
@@ -40,6 +41,19 @@ export default function AeonInterface() {
                         <div className="text-xs">UPLINK: ACTIVE</div>
                         <div className="text-xs">LATENCY: 12ms</div>
                     </div>
+                </div>
+
+                {/* Navigation */}
+                <div className="flex flex-wrap gap-2 border-b border-crt-amber/30 pb-3 mb-2">
+                    <Link href="/mainframe" className="px-3 py-1 uppercase tracking-wider text-sm border border-crt-amber/50 hover:bg-crt-amber hover:text-black transition-colors">
+                        ◄ MAINFRAME
+                    </Link>
+                    <Link href="/spectrograph" className="px-3 py-1 uppercase tracking-wider text-sm border border-crt-amber/50 hover:bg-crt-amber hover:text-black transition-colors">
+                        SPECTROGRAPH
+                    </Link>
+                    <Link href="/" className="px-3 py-1 uppercase tracking-wider text-sm border border-crt-amber/30 text-crt-amber/50 hover:bg-crt-amber/20 hover:text-crt-amber transition-colors ml-auto">
+                        ◄ BOOT MENU
+                    </Link>
                 </div>
 
                 {/* Main Grid Layout */}
