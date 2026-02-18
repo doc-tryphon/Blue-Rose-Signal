@@ -132,21 +132,23 @@ export default function Home() {
 
             <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
               <label className="flex flex-col space-y-2 md:space-y-1">
-                <span className="text-xs uppercase tracking-wider text-crt-amber/70">
+                <span className="text-xs uppercase tracking-wider text-blue-400">
                   Threshold: <span className="text-crt-amber">{params.threshold.toFixed(2)}</span>
                 </span>
                 <input type="range" min="0.1" max="0.9" step="0.01" value={params.threshold}
-                  onChange={(e) => setParams({...params, threshold: parseFloat(e.target.value)})} />
+                  onChange={(e) => setParams({...params, threshold: parseFloat(e.target.value)})}
+                  className="accent-blue-500" />
               </label>
             </div>
 
             <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
               <label className="flex flex-col space-y-2 md:space-y-1">
-                <span className="text-xs uppercase tracking-wider text-crt-amber/70">
+                <span className="text-xs uppercase tracking-wider text-blue-400">
                   Smoothness: <span className="text-crt-amber">{params.smoothness}</span>
                 </span>
                 <input type="range" min="50" max="2000" step="10" value={params.smoothness}
-                  onChange={(e) => setParams({...params, smoothness: parseFloat(e.target.value)})} />
+                  onChange={(e) => setParams({...params, smoothness: parseFloat(e.target.value)})}
+                  className="accent-blue-500" />
               </label>
             </div>
 
@@ -174,21 +176,23 @@ export default function Home() {
 
             <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
               <label className="flex flex-col space-y-2 md:space-y-1">
-                <span className="text-xs uppercase tracking-wider text-crt-amber/70">
+                <span className="text-xs uppercase tracking-wider text-green-400">
                   Hum Volume: <span className="text-crt-amber">{params.humGain.toFixed(2)}</span>
                 </span>
                 <input type="range" min="0" max="1" step="0.01" value={params.humGain}
-                  onChange={(e) => setParams({...params, humGain: parseFloat(e.target.value)})} />
+                  onChange={(e) => setParams({...params, humGain: parseFloat(e.target.value)})}
+                  className="accent-green-500" />
               </label>
             </div>
 
             <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
               <label className="flex flex-col space-y-2 md:space-y-1">
-                <span className="text-xs uppercase tracking-wider text-crt-amber/70">
+                <span className="text-xs uppercase tracking-wider text-yellow-400">
                   Master Vol: <span className="text-crt-amber">{params.masterVolume.toFixed(2)}</span>
                 </span>
                 <input type="range" min="0" max="1" step="0.01" value={params.masterVolume}
-                  onChange={(e) => setParams({...params, masterVolume: parseFloat(e.target.value)})} />
+                  onChange={(e) => setParams({...params, masterVolume: parseFloat(e.target.value)})}
+                  className="accent-yellow-500" />
               </label>
             </div>
 
@@ -212,29 +216,32 @@ export default function Home() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-2">
                   <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex flex-col space-y-2 md:space-y-1">
-                      <span className="text-xs uppercase tracking-wider text-crt-amber/70">
+                      <span className="text-xs uppercase tracking-wider text-green-400">
                         120Hz: <span className="text-crt-amber">{params.hum120Gain.toFixed(2)}</span>
                       </span>
                       <input type="range" min="0" max="1" step="0.01" value={params.hum120Gain}
-                        onChange={(e) => setParams({...params, hum120Gain: parseFloat(e.target.value)})} />
+                        onChange={(e) => setParams({...params, hum120Gain: parseFloat(e.target.value)})}
+                        className="accent-green-500" />
                     </label>
                   </div>
                   <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex flex-col space-y-2 md:space-y-1">
-                      <span className="text-xs uppercase tracking-wider text-crt-amber/70">
+                      <span className="text-xs uppercase tracking-wider text-green-400">
                         180Hz: <span className="text-crt-amber">{params.hum180Gain.toFixed(2)}</span>
                       </span>
                       <input type="range" min="0" max="1" step="0.01" value={params.hum180Gain}
-                        onChange={(e) => setParams({...params, hum180Gain: parseFloat(e.target.value)})} />
+                        onChange={(e) => setParams({...params, hum180Gain: parseFloat(e.target.value)})}
+                        className="accent-green-500" />
                     </label>
                   </div>
                   <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex flex-col space-y-2 md:space-y-1">
-                      <span className="text-xs uppercase tracking-wider text-crt-amber/70">
+                      <span className="text-xs uppercase tracking-wider text-green-400">
                         300Hz: <span className="text-crt-amber">{params.hum300Gain.toFixed(2)}</span>
                       </span>
                       <input type="range" min="0" max="1" step="0.01" value={params.hum300Gain}
-                        onChange={(e) => setParams({...params, hum300Gain: parseFloat(e.target.value)})} />
+                        onChange={(e) => setParams({...params, hum300Gain: parseFloat(e.target.value)})}
+                        className="accent-green-500" />
                     </label>
                   </div>
                 </div>
@@ -242,12 +249,12 @@ export default function Home() {
 
               <div className="border-t border-crt-amber/10 pt-3">
                 <div className="text-xs text-crt-amber/40 mb-2 uppercase tracking-wider flex items-center gap-2">
-                  Ring Modulation <span className="text-crt-amber/60 normal-case italic">&quot;Ghost in the Radio&quot;</span>
+                  Ring Modulation <span className="text-purple-400 normal-case italic">&quot;Ghost in the Radio&quot;</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-2">
                   <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex items-center justify-between">
-                      <span className="text-xs uppercase tracking-wider text-crt-amber/70">Carrier Scan</span>
+                      <span className="text-xs uppercase tracking-wider text-purple-400">Carrier Scan</span>
                       <input type="checkbox" checked={params.ringModEnabled}
                         onChange={(e) => setParams({...params, ringModEnabled: e.target.checked})}
                         className="w-5 h-5" />
@@ -255,12 +262,12 @@ export default function Home() {
                   </div>
                   <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex flex-col space-y-2 md:space-y-1">
-                      <span className="text-xs uppercase tracking-wider text-crt-amber/70">
+                      <span className="text-xs uppercase tracking-wider text-purple-400">
                         Carrier: <span className="text-crt-amber">{params.carrierFreq.toFixed(0)}Hz</span>
                       </span>
                       <input type="range" min="100" max="3000" step="50" value={params.carrierFreq}
                         onChange={(e) => setParams({...params, carrierFreq: parseFloat(e.target.value)})}
-                        disabled={!params.ringModEnabled} />
+                        className="accent-purple-500" disabled={!params.ringModEnabled} />
                     </label>
                   </div>
                 </div>
@@ -268,25 +275,27 @@ export default function Home() {
 
               <div className="border-t border-crt-amber/10 pt-3">
                 <div className="text-xs text-crt-amber/40 mb-2 uppercase tracking-wider flex items-center gap-2">
-                  Tape Effects <span className="text-crt-amber/60 normal-case italic">&quot;Vintage Degradation&quot;</span>
+                  Tape Effects <span className="text-cyan-400 normal-case italic">&quot;Vintage Degradation&quot;</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-2">
                   <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex flex-col space-y-2 md:space-y-1">
-                      <span className="text-xs uppercase tracking-wider text-crt-amber/70">
+                      <span className="text-xs uppercase tracking-wider text-cyan-400">
                         Wow/Flutter: <span className="text-crt-amber">{params.wowFlutterDepth.toFixed(2)}</span>
                       </span>
                       <input type="range" min="0" max="1" step="0.01" value={params.wowFlutterDepth}
-                        onChange={(e) => setParams({...params, wowFlutterDepth: parseFloat(e.target.value)})} />
+                        onChange={(e) => setParams({...params, wowFlutterDepth: parseFloat(e.target.value)})}
+                        className="accent-cyan-500" />
                     </label>
                   </div>
                   <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex flex-col space-y-2 md:space-y-1">
-                      <span className="text-xs uppercase tracking-wider text-crt-amber/70">
+                      <span className="text-xs uppercase tracking-wider text-cyan-400">
                         Saturation: <span className="text-crt-amber">{params.saturation.toFixed(2)}</span>
                       </span>
                       <input type="range" min="0" max="1" step="0.01" value={params.saturation}
-                        onChange={(e) => setParams({...params, saturation: parseFloat(e.target.value)})} />
+                        onChange={(e) => setParams({...params, saturation: parseFloat(e.target.value)})}
+                        className="accent-cyan-500" />
                     </label>
                   </div>
                 </div>
