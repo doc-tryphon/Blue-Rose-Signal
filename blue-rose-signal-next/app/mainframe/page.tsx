@@ -148,7 +148,7 @@ export default function MainframeDashboard() {
                   <div className="flex items-center gap-3 mb-2">
                     <span className="bg-crt-amber text-black text-xs font-bold px-1">PROTOCOL {protocol.id}</span>
                     <h3 className="font-bold text-lg">{protocol.name}</h3>
-                    <span className="ml-auto text-xs text-green-400 border border-green-900 px-2 py-0.5 rounded-full">{protocol.status}</span>
+                    <span className="ml-auto text-xs text-green-400 border border-green-900 px-2 py-0.5">{protocol.status}</span>
                   </div>
 
                   <div className="pl-4 border-l-2 border-crt-amber/20 space-y-2">
@@ -167,7 +167,7 @@ export default function MainframeDashboard() {
                     {protocol.subProtocols && (
                       <div className="mt-3 space-y-3 pt-2">
                         {protocol.subProtocols.map(sub => (
-                          <div key={sub.id} className="bg-black/30 p-2 rounded">
+                          <div key={sub.id} className="bg-black/30 p-2">
                             <span className="text-crt-amber/80 font-bold block text-xs mb-1">{sub.id}: {sub.name}</span>
                             <span className="text-sm opacity-80">{sub.description}</span>
                           </div>

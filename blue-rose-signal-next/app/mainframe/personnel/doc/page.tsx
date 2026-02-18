@@ -101,7 +101,7 @@ export default function PersonnelDoc() {
                 <div className="space-y-1 text-sm font-mono opacity-80">
                   <div className="grid grid-cols-[100px_1fr] gap-2">
                     <span className="opacity-50">STATUS:</span>
-                    <span className={op.status.includes("ACTIVE") ? "text-green-400" : op.status.includes("DEPLOYED") ? "text-blue-400" : "text-crt-amber"}>{op.status}</span>
+                    <span className={op.status.includes("ACTIVE") ? "text-green-400" : "text-crt-amber/70"}>{op.status}</span>
                   </div>
                   <div className="grid grid-cols-[100px_1fr] gap-2">
                     <span className="opacity-50">TECH STACK:</span>

@@ -136,25 +136,25 @@ export default function AudioVisualizer({ audioContext, analyserNode, isPlaying 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
       {/* Waveform Display */}
-      <div className="border border-amber-500/30 rounded p-2 bg-black/50">
-        <div className="text-xs text-amber-500/70 mb-1 uppercase tracking-wider">Waveform</div>
+      <div className="border border-crt-amber/30 p-2 bg-black/40">
+        <div className="text-xs text-crt-amber/60 mb-1 uppercase tracking-wider">Waveform</div>
         <canvas
           ref={waveformCanvasRef}
           width={600}
           height={100}
-          className="w-full h-auto bg-black rounded"
+          className="w-full h-auto bg-black"
           style={{ imageRendering: 'crisp-edges' }}
         />
       </div>
 
       {/* Spectrogram Display */}
-      <div className="border border-amber-500/30 rounded p-2 bg-black/50">
-        <div className="text-xs text-amber-500/70 mb-1 uppercase tracking-wider">Spectrogram</div>
+      <div className="border border-crt-amber/30 p-2 bg-black/40">
+        <div className="text-xs text-crt-amber/60 mb-1 uppercase tracking-wider">Spectrogram</div>
         <canvas
           ref={spectrogramCanvasRef}
           width={600}
           height={100}
-          className="w-full h-auto bg-black rounded"
+          className="w-full h-auto bg-black"
           style={{ imageRendering: 'crisp-edges' }}
         />
       </div>

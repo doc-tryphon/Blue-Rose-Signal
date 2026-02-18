@@ -165,7 +165,7 @@ export default function CaseFilePage({ params }: { params: Promise<{ id: string 
                   <div key={idx} className="bg-black/20 p-4 border border-crt-amber/20 hover:bg-black/40 transition-colors">
                     <div className="flex flex-wrap items-center gap-2 mb-2 border-b border-crt-amber/10 pb-2">
                       <span className="font-bold text-crt-amber">{theory.name}:</span>
-                      <span className="text-xs border border-crt-amber/40 px-1 rounded text-crt-amber/70">{theory.type}</span>
+                      <span className="text-xs border border-crt-amber/40 px-1 text-crt-amber/70">{theory.type}</span>
                       {theory.plausibility && (
                         <span className={`ml-auto text-xs font-bold px-2 py-0.5 ${
                           theory.plausibility === 'HIGH' ? 'bg-green-900/30 text-green-400' : 'bg-gray-800 text-gray-400'
@@ -198,7 +198,7 @@ export default function CaseFilePage({ params }: { params: Promise<{ id: string 
                      <div className="font-bold mb-1 text-crt-amber/80">UNIT CONSENSUS:</div>
                      {caseFile.afterActionReport.consensus}
                   </div>
-                  <div className="italic opacity-80 bg-crt-amber/5 p-3 rounded">
+                  <div className="italic opacity-80 bg-crt-amber/5 p-3">
                     {caseFile.afterActionReport.statement}
                   </div>
                 </div>
@@ -258,7 +258,7 @@ export default function CaseFilePage({ params }: { params: Promise<{ id: string 
                   <div key={idx} className="bg-red-900/10 border border-red-500/30 p-3 hover:bg-red-900/20 transition-colors">
                     <div className="flex justify-between items-start mb-1">
                        <span className="font-bold text-red-400 text-sm">{protocol.id ? `PROTOCOL ${protocol.id}` : protocol.name}</span>
-                       {protocol.status && <span className="text-[10px] border border-red-500/50 px-1 rounded text-red-400">{protocol.status}</span>}
+                       {protocol.status && <span className="text-[10px] border border-red-500/50 px-1 text-red-400">{protocol.status}</span>}
                     </div>
                     {protocol.id && <div className="text-xs font-bold opacity-80 mb-2">{protocol.name}</div>}
 

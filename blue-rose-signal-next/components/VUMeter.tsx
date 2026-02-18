@@ -87,12 +87,12 @@ export default function VUMeter({ analyserNode, isPlaying, label, color = '#ffcc
 
   return (
     <div className="space-y-1">
-      <div className="text-xs text-amber-500/70 uppercase tracking-wider">{label}</div>
+      <div className="text-xs text-crt-amber/60 uppercase tracking-wider">{label}</div>
       <canvas
         ref={canvasRef}
         width={200}
         height={20}
-        className="w-full h-auto bg-black rounded border border-amber-500/20"
+        className="w-full h-auto bg-black border border-crt-amber/20"
         style={{ imageRendering: 'crisp-edges' }}
       />
     </div>
