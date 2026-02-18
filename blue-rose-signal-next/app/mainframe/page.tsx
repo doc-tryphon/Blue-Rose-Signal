@@ -6,8 +6,8 @@ import CRTMonitor from '@/components/CRTMonitor'
 import { SYSTEM_PROTOCOLS, CASE_FILES } from '@/lib/mainframe-data'
 
 // Shared nav button styles
-const navButtonBase = 'w-full md:w-auto px-4 py-3 md:px-3 md:py-1 text-left md:text-center uppercase tracking-wider transition-colors border border-crt-amber/50 md:border-0 bg-crt-amber/5 md:bg-transparent hover:bg-crt-amber/20'
-const navButtonActive = 'bg-crt-amber text-black font-bold border-crt-amber'
+const navButtonBase = 'w-full md:w-auto px-4 py-3 md:px-3 md:py-1 text-left md:text-center uppercase tracking-wider transition-all border border-crt-amber/30 bg-transparent hover:bg-crt-amber/10 hover:border-crt-amber/70 text-crt-amber/70 hover:text-crt-amber'
+const navButtonActive = 'bg-crt-amber/20 text-crt-amber font-bold border-crt-amber shadow-[0_0_10px_rgba(255,204,0,0.15)]'
 
 // Terminal-style bracket wrapper (mobile only)
 function TerminalLabel({ children }: { children: React.ReactNode }) {
