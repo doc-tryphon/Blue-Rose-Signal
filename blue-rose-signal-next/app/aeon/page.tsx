@@ -51,19 +51,36 @@ export default function AeonInterface() {
 
                         <div className="border border-crt-amber/30 p-2 bg-black/40">
                             <div className="text-xs text-crt-amber/60 mb-2">OPERATION MODE</div>
-                            <div className="space-y-1">
-                                {(['rigorous', 'exploratory', 'hybrid'] as const).map((m) => (
-                                    <button
-                                        key={m}
-                                        onClick={() => setMode(m)}
-                                        className={`w-full text-left px-2 py-1 text-sm transition-colors border ${mode === m
-                                                ? 'bg-crt-amber text-black border-crt-amber font-bold'
-                                                : 'border-transparent hover:bg-crt-amber/10'
-                                            }`}
-                                    >
-                                        [{mode === m ? 'x' : ' '}] {m.toUpperCase()}
-                                    </button>
-                                ))}
+                            <div className="flex flex-col gap-3">
+                                {(['rigorous', 'exploratory', 'hybrid'] as const).map((m) => {
+                                    const isSelected = mode === m
+                                    return (
+                                        <button
+                                            key={m}
+                                            onClick={() => setMode(m)}
+                                            className={`group relative w-full px-4 py-4 text-sm font-bold tracking-[0.2em] uppercase transition-all duration-300 border-2 clip-path-polygon flex items-center justify-between ${isSelected
+                                                    ? 'bg-crt-amber/20 text-crt-amber border-crt-amber shadow-[0_0_20px_rgba(251,191,36,0.4)] scale-[1.02]'
+                                                    : 'bg-black/60 text-crt-amber/50 border-crt-amber/20 hover:border-crt-amber/60 hover:text-crt-amber hover:bg-crt-amber/5 hover:shadow-[0_0_10px_rgba(251,191,36,0.1)]'
+                                                }`}
+                                        >
+                                            {/* Selection Indicator Icon */}
+                                            <div className={`flex items-center transition-all duration-300 ${isSelected ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}>
+                                                <span className="mr-2">►</span>
+                                            </div>
+
+                                            <span className={`relative z-10 flex-1 text-center transition-all duration-300 ${isSelected ? 'scale-110 text-shadow-glow' : ''}`}>
+                                                {m}
+                                            </span>
+
+                                            {/* Status Light */}
+                                            <span className={`w-2 h-2 rounded-full transition-all duration-300 ${isSelected ? 'bg-crt-amber shadow-[0_0_8px_rgba(251,191,36,1)]' : 'bg-crt-amber/10'}`} />
+
+                                            {/* Corner accents */}
+                                            <span className={`absolute top-0 left-0 w-1.5 h-1.5 border-t-2 border-l-2 transition-colors ${isSelected ? 'border-crt-amber opacity-100' : 'border-crt-amber/30 opacity-50'}`} />
+                                            <span className={`absolute bottom-0 right-0 w-1.5 h-1.5 border-b-2 border-r-2 transition-colors ${isSelected ? 'border-crt-amber opacity-100' : 'border-crt-amber/30 opacity-50'}`} />
+                                        </button>
+                                    )
+                                })}
                             </div>
                         </div>
 

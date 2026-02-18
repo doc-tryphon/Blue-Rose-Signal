@@ -32,13 +32,28 @@ export class AeonClient {
         };
 
         try {
-            const res = await fetch(API_ENDPOINT, {
+            let res = await fetch(API_ENDPOINT, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(payload),
             });
+
+            // Handle Stale Session (404)
+            if (res.status === 404 && sessionId) {
+                console.warn("Session expired or invalid. Creating new session...");
+                this.clearSession();
+                // Retry without session ID
+                payload.session_id = undefined;
+                res = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+            }
 
             if (!res.ok) {
                 throw new Error(`Protocol Error: ${res.statusText}`);
