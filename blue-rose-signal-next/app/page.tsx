@@ -34,7 +34,7 @@ export default function BootMenu() {
     })
   }, [])
 
-  // Handle keyboard input (1 or 2)
+  // Handle keyboard input (1, 2, or 3)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!showMenu) return
@@ -45,6 +45,9 @@ export default function BootMenu() {
       } else if (e.key === '2') {
         setInput('2')
         setTimeout(() => router.push('/spectrograph'), 300)
+      } else if (e.key === '3') {
+        setInput('3')
+        setTimeout(() => router.push('/aeon'), 300)
       }
     }
 
@@ -76,23 +79,29 @@ export default function BootMenu() {
 
             <Link
               href="/mainframe"
-              className="block hover:bg-crt-amber hover:text-black transition-colors p-2 -mx-2"
+              className="group flex items-center gap-1 hover:bg-crt-amber/10 hover:text-white transition-all p-2 -mx-2"
             >
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity text-crt-amber">[</span>
               [1] MAINFRAME DASHBOARD (AUTHORIZED PERSONNEL ONLY)
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity text-crt-amber">]</span>
             </Link>
 
             <Link
               href="/spectrograph"
-              className="block hover:bg-crt-amber hover:text-black transition-colors p-2 -mx-2"
+              className="group flex items-center gap-1 hover:bg-crt-amber/10 hover:text-white transition-all p-2 -mx-2"
             >
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity text-crt-amber">[</span>
               [2] SIGNAL SPECTROGRAPH (PUBLIC UTILITY)
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity text-crt-amber">]</span>
             </Link>
 
             <Link
               href="/aeon"
-              className="block hover:bg-crt-amber hover:text-black transition-colors p-2 -mx-2"
+              className="group flex items-center gap-1 hover:bg-crt-amber/10 hover:text-white transition-all p-2 -mx-2"
             >
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity text-crt-amber">[</span>
               [3] PROJECT AEON (NEURAL INTERFACE)
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity text-crt-amber">]</span>
             </Link>
             <div className="mt-8 flex items-center gap-2">
               <span>&gt; INPUT SELECTION:</span>

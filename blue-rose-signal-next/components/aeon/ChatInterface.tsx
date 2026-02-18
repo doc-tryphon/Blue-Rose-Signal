@@ -113,7 +113,7 @@ export default function ChatInterface({ mode, onResponse }: ChatInterfaceProps) 
 
                         {/* Content Body */}
                         <div className={`pl-4 border-l-2 py-1 ${getBorderColor(msg.status, msg.role)}`}>
-                            <div className="prose prose-invert prose-p:mb-2 prose-pre:bg-gray-900/50 prose-pre:border prose-pre:border-gray-700 max-w-none">
+                            <div className="prose prose-invert prose-p:mb-2 prose-pre:bg-black/40 prose-pre:border prose-pre:border-crt-amber/20 max-w-none">
                                 <ReactMarkdown
                                     remarkPlugins={[remarkMath]}
                                     rehypePlugins={[rehypeKatex]}
@@ -121,7 +121,7 @@ export default function ChatInterface({ mode, onResponse }: ChatInterfaceProps) 
                                         // Override strict color classes to inherit from parent div (allows green/red shifts)
                                         p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed inherit-color">{children}</p>,
                                         strong: ({ children }) => <strong className="font-bold opacity-100">{children}</strong>,
-                                        code: ({ children }) => <code className="bg-white/10 px-1 rounded font-normal">{children}</code>
+                                        code: ({ children }) => <code className="bg-white/10 px-1 font-normal">{children}</code>
                                     }}
                                 >
                                     {msg.content}
