@@ -130,7 +130,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-2">
 
-            <div className="bg-black/40 p-3 md:p-2 border border-crt-amber/20">
+            <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
               <label className="flex flex-col space-y-2 md:space-y-1">
                 <span className="text-xs uppercase tracking-wider text-crt-amber/70">
                   Threshold: <span className="text-crt-amber">{params.threshold.toFixed(2)}</span>
@@ -140,7 +140,7 @@ export default function Home() {
               </label>
             </div>
 
-            <div className="bg-black/40 p-3 md:p-2 border border-crt-amber/20">
+            <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
               <label className="flex flex-col space-y-2 md:space-y-1">
                 <span className="text-xs uppercase tracking-wider text-crt-amber/70">
                   Smoothness: <span className="text-crt-amber">{params.smoothness}</span>
@@ -150,7 +150,7 @@ export default function Home() {
               </label>
             </div>
 
-            <div className="bg-black/40 p-3 md:p-2 border border-red-500/20">
+            <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
               <label className="flex flex-col space-y-2 md:space-y-1">
                 <span className="text-xs uppercase tracking-wider text-red-400">
                   Spark Gain: <span className="text-crt-amber">{params.sparkGain.toFixed(0)}</span>
@@ -161,7 +161,7 @@ export default function Home() {
               </label>
             </div>
 
-            <div className="bg-black/40 p-3 md:p-2 border border-red-500/20">
+            <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
               <label className="flex flex-col space-y-2 md:space-y-1">
                 <span className="text-xs uppercase tracking-wider text-red-400">
                   Noise Level: <span className="text-crt-amber">{params.noiseGain.toFixed(2)}</span>
@@ -172,7 +172,7 @@ export default function Home() {
               </label>
             </div>
 
-            <div className="bg-black/40 p-3 md:p-2 border border-crt-amber/20">
+            <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
               <label className="flex flex-col space-y-2 md:space-y-1">
                 <span className="text-xs uppercase tracking-wider text-crt-amber/70">
                   Hum Volume: <span className="text-crt-amber">{params.humGain.toFixed(2)}</span>
@@ -182,7 +182,7 @@ export default function Home() {
               </label>
             </div>
 
-            <div className="bg-black/40 p-3 md:p-2 border border-crt-amber/20">
+            <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
               <label className="flex flex-col space-y-2 md:space-y-1">
                 <span className="text-xs uppercase tracking-wider text-crt-amber/70">
                   Master Vol: <span className="text-crt-amber">{params.masterVolume.toFixed(2)}</span>
@@ -210,7 +210,7 @@ export default function Home() {
               <div>
                 <div className="text-xs text-crt-amber/40 mb-2 uppercase tracking-wider">Individual Harmonic Control</div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-2">
-                  <div className="bg-black/40 p-3 md:p-2 border border-crt-amber/20">
+                  <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex flex-col space-y-2 md:space-y-1">
                       <span className="text-xs uppercase tracking-wider text-crt-amber/70">
                         120Hz: <span className="text-crt-amber">{params.hum120Gain.toFixed(2)}</span>
@@ -219,7 +219,7 @@ export default function Home() {
                         onChange={(e) => setParams({...params, hum120Gain: parseFloat(e.target.value)})} />
                     </label>
                   </div>
-                  <div className="bg-black/40 p-3 md:p-2 border border-crt-amber/20">
+                  <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex flex-col space-y-2 md:space-y-1">
                       <span className="text-xs uppercase tracking-wider text-crt-amber/70">
                         180Hz: <span className="text-crt-amber">{params.hum180Gain.toFixed(2)}</span>
@@ -228,7 +228,7 @@ export default function Home() {
                         onChange={(e) => setParams({...params, hum180Gain: parseFloat(e.target.value)})} />
                     </label>
                   </div>
-                  <div className="bg-black/40 p-3 md:p-2 border border-crt-amber/20">
+                  <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex flex-col space-y-2 md:space-y-1">
                       <span className="text-xs uppercase tracking-wider text-crt-amber/70">
                         300Hz: <span className="text-crt-amber">{params.hum300Gain.toFixed(2)}</span>
@@ -245,7 +245,7 @@ export default function Home() {
                   Ring Modulation <span className="text-crt-amber/60 normal-case italic">&quot;Ghost in the Radio&quot;</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-2">
-                  <div className="bg-black/40 p-3 md:p-2 border border-crt-amber/20">
+                  <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex items-center justify-between">
                       <span className="text-xs uppercase tracking-wider text-crt-amber/70">Carrier Scan</span>
                       <input type="checkbox" checked={params.ringModEnabled}
@@ -253,7 +253,7 @@ export default function Home() {
                         className="w-5 h-5" />
                     </label>
                   </div>
-                  <div className="bg-black/40 p-3 md:p-2 border border-crt-amber/20">
+                  <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex flex-col space-y-2 md:space-y-1">
                       <span className="text-xs uppercase tracking-wider text-crt-amber/70">
                         Carrier: <span className="text-crt-amber">{params.carrierFreq.toFixed(0)}Hz</span>
@@ -271,7 +271,7 @@ export default function Home() {
                   Tape Effects <span className="text-crt-amber/60 normal-case italic">&quot;Vintage Degradation&quot;</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-2">
-                  <div className="bg-black/40 p-3 md:p-2 border border-crt-amber/20">
+                  <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex flex-col space-y-2 md:space-y-1">
                       <span className="text-xs uppercase tracking-wider text-crt-amber/70">
                         Wow/Flutter: <span className="text-crt-amber">{params.wowFlutterDepth.toFixed(2)}</span>
@@ -280,7 +280,7 @@ export default function Home() {
                         onChange={(e) => setParams({...params, wowFlutterDepth: parseFloat(e.target.value)})} />
                     </label>
                   </div>
-                  <div className="bg-black/40 p-3 md:p-2 border border-crt-amber/20">
+                  <div className="p-3 md:p-2 border-b border-crt-amber/10 last:border-b-0">
                     <label className="flex flex-col space-y-2 md:space-y-1">
                       <span className="text-xs uppercase tracking-wider text-crt-amber/70">
                         Saturation: <span className="text-crt-amber">{params.saturation.toFixed(2)}</span>
@@ -297,16 +297,18 @@ export default function Home() {
         </div>
 
         {/* Start/Stop Button */}
-        <button
-          onClick={handleStartStop}
-          className={`w-full px-6 py-3 border-2 transition-all text-lg uppercase tracking-wider ${
-            isPlaying
-              ? 'border-red-500 text-red-500 hover:bg-red-500 hover:text-black shadow-[0_0_15px_rgba(255,0,0,0.3)] hover:shadow-[0_0_30px_rgba(255,0,0,0.8)]'
-              : 'border-crt-amber text-crt-amber hover:bg-crt-amber hover:text-black shadow-[0_0_15px_rgba(255,204,0,0.3)] hover:shadow-[0_0_30px_rgba(255,204,0,0.8)]'
-          }`}
-        >
-          {isPlaying ? '⏹ STOP SIGNAL' : '▶ START SIGNAL'}
-        </button>
+        <div className="flex justify-center py-2">
+          <button
+            onClick={handleStartStop}
+            className={`px-10 py-4 border-2 transition-all text-xl uppercase tracking-widest ${
+              isPlaying
+                ? 'border-red-500 text-red-500 hover:bg-red-500 hover:text-black shadow-[0_0_20px_rgba(255,0,0,0.5),0_0_60px_rgba(255,0,0,0.2)] hover:shadow-[0_0_40px_rgba(255,0,0,0.9)]'
+                : 'border-red-500/70 text-red-400 hover:bg-red-500 hover:text-black shadow-[0_0_20px_rgba(255,0,0,0.3),0_0_60px_rgba(255,0,0,0.1)] hover:shadow-[0_0_40px_rgba(255,0,0,0.8)] animate-pulse'
+            }`}
+          >
+            {isPlaying ? '⏹ STOP SIGNAL' : '▶ START SIGNAL'}
+          </button>
+        </div>
 
         {/* Signal Monitors — always visible */}
         <div className="space-y-3">
